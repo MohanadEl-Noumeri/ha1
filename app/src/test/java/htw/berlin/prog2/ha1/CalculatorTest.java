@@ -124,5 +124,19 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("should display the same number if only one number and equals is pressed")
+    void testSameNumber() {
+        Calculator calc = new Calculator();
+        calc.pressDigitKey(2);
+        calc.pressDigitKey(0);
+        calc.pressEqualsKey();
+
+        String expected = "20";
+        String actual = calc.readScreen();
+        assertEquals(expected, actual);
+    }
+
 }
 
