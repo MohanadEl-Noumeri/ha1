@@ -60,8 +60,26 @@ public class Calculator {
      * @param operation "+" für Addition, "-" für Substraktion, "x" für Multiplikation, "/" für Division
      */
     public void pressBinaryOperationKey(String operation)  {
-        latestValue = Double.parseDouble(screen);
+        if(!latestOperation.isEmpty()){
+            double current = Double.parseDouble(screen);
+            double result = rechne(latestValue, current, latestOperation);
+
+            screen = Double.toString(result);
+            latestValue = result;
+        } else {
+            latestValue = Double.parseDouble(screen);
+        }
         latestOperation = operation;
+    }
+
+    private double rechne(double latestValue, double current, String latestOperation) {
+        return switch (latestOperation) {
+            case "+" -> latestValue + current;
+            case "-" -> latestValue - current;
+            case "x" -> latestValue * current;
+            case "/" -> latestValue / current;
+            default -> throw new IllegalArgumentException();
+        };
     }
 
     /**
@@ -117,6 +135,8 @@ public class Calculator {
      * Operation (ggf. inklusive letztem Operand) erneut auf den aktuellen Bildschirminhalt angewandt
      * und das Ergebnis direkt angezeigt.
      */
+
+
     public void pressEqualsKey() {
         if (latestOperation.isEmpty()) return;
 
